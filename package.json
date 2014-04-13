@@ -1,6 +1,6 @@
 {
   "name": "fixture-dir",
-  "description": "Copy directory to temporary working directory",
+  "description": "Create/copy directory to temporary directory",
   "version": "0.1.0",
   "homepage": "https://github.com/twolfson/fixture-dir",
   "author": {

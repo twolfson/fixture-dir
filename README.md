@@ -1,6 +1,15 @@
 # fixture-dir [![Build status](https://travis-ci.org/twolfson/fixture-dir.png?branch=master)](https://travis-ci.org/twolfson/fixture-dir)
 
-Copy directory to temporary working directory
+Create/copy directory to temporary directory
+
+This was built for quickly setting up/tearing down directories that originate from tests but should not contaminate the repo. Previous to this repo's creation, I have used this pattern in [foundry-release-git][] and [sexy-bash-prompt][].
+
+[foundry-release-git]: https://github.com/twolfson/foundry-release-git/blob/1.0.1/test/utils/fixtures.js
+[sexy-bash-prompt]: https://github.com/twolfson/sexy-bash-prompt/blob/0.21.0/test/prompt_test.sh#L8-L19
+
+A mocha flavor, [mocha-fixture-dir][], is available for automatic directory cleanup.
+
+[mocha-fixture-dir]: https://github.com/twolfson/mocha-fixture-dir
 
 ## Getting Started
 Install the module with: `npm install fixture-dir`
