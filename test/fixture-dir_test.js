@@ -89,7 +89,6 @@ describe('A FixtureDir', function () {
       });
     });
     fsUtils.readdir('/tmp/fixture-dir-tests/copied');
-    cleanupFixtureDir();
 
     it('creates a directory with the same contents', function () {
       expect(this.files).to.contain('hai.txt');
@@ -97,8 +96,15 @@ describe('A FixtureDir', function () {
     });
 
     describe('when destroyed', function () {
-      it('no longer exists', function () {
+      before(function (done) {
+        this.dir.destroy(done);
+        delete this.dir;
+      });
+      fsUtils.readdir('/tmp/fixture-dir-tests');
 
+      it('no longer exists', function () {
+        expect(this.files).to.not.contain('copied');
+        expect(this.files).to.have.length(0);
       });
     });
   });
