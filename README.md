@@ -56,7 +56,19 @@ it('retrieved `git log` in our fixture directory', function () {
 _(Coming soon)_
 
 ## Examples
-_(Coming soon)_
+Creating a temporary folder with no contents:
+
+```js
+var fixtureDir = new FixtureDir('my-node-module-tests');
+before(function () {
+  var that = this;
+  fixtureDir.mkdir(function (err, dir) {
+    // Generated directory `/tmp/my-node-module-tests/abc123`
+    that.dir = dir;
+    done();
+  });
+});
+```
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint via [grunt](https://github.com/gruntjs/grunt) and test via `npm test`.
