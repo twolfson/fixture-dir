@@ -11,6 +11,11 @@ function cleanupFixtureDir() {
 }
 
 var fsUtils = {
+  mkdir: function (dirpath) {
+    before(function (done) {
+      fs.mkdir(dirpath, done);
+    });
+  },
   readdir: function (dirpath) {
     before(function (done) {
       var that = this;
@@ -21,6 +26,11 @@ var fsUtils = {
     });
     after(function () {
       delete this.files;
+    });
+  },
+  writeFile: function (filepath, content) {
+    before(function (done) {
+      fs.writeFile(filepath, content, done);
     });
   }
 };
@@ -72,8 +82,7 @@ describe('A FixtureDir', function () {
     cleanupFixtureDir();
 
     it('creates a directory under that name', function () {
-      expect(this.files).to.contain('named');
-      expect(this.files).to.have.length(1);
+      expect(this.files).to.deep.equal(['named']);
     });
   });
 
@@ -91,8 +100,7 @@ describe('A FixtureDir', function () {
     fsUtils.readdir('/tmp/fixture-dir-tests/copied');
 
     it('creates a directory with the same contents', function () {
-      expect(this.files).to.contain('hai.txt');
-      expect(this.files).to.have.length(1);
+      expect(this.files).to.deep.equal(['hai.txt']);
     });
 
     describe('when destroyed', function () {
@@ -104,12 +112,19 @@ describe('A FixtureDir', function () {
 
       it('no longer exists', function () {
         expect(this.files).to.not.contain('copied');
-        expect(this.files).to.have.length(0);
       });
     });
   });
 
-  describe.skip('of a named folder that already exists and has contents (e.g. bad test/no cleanup)', function () {
+  describe('of a named folder that already exists and has contents (e.g. bad test/no cleanup)', function () {
+    fsUtils.mkdir('/tmp/fixture-dir-tests/existing');
+    fsUtils.writeFile('/tmp/fixture-dir-tests/existing/hello.txt', 'world');
+    // Assert the file was created for sanity
+    fsUtils.readdir('/tmp/fixture-dir-tests/existing');
+    before(function () {
+      expect(this.files).to.deep.equal(['hello.txt']);
+    });
+
     it('cleans out the directory', function () {
 
     });
