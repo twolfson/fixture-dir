@@ -84,6 +84,10 @@ describe('A FixtureDir', function () {
     it('creates a directory under that name', function () {
       expect(this.files).to.deep.equal(['named']);
     });
+
+    it('provides the folder path', function () {
+      expect(this.dir.path).to.deep.equal('/tmp/fixture-dir-tests/named');
+    });
   });
 
   describe('copying another folder', function () {
