@@ -34,7 +34,7 @@ before(function () {
   });
 });
 before(function (done) {
-  // Run `git log` in our directory
+  // Run `git log` in our directory (/tmp/my-node-module-tests/git-log)
   exec('git log', {cwd: this.dir.path}, function (err, stdout, stderr) {
     // Save our stdout and callback
     this.stdout = stdout;
