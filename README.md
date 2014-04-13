@@ -70,17 +70,17 @@ Constructor for fixture directory namespaces inside of `/tmp` (or your equivalen
     - options.copyFrom `String`, Path to source folder to copy contents from
 - cb `Function`, Error-first callback function with signature `(err, dir)`
     - err `Error|null`, If any errors occurred then this will be it
-    - dir `Object`, `Directory` for folder we just created
+    - dir `Directory`, Instance of `Directory` for folder we just created
 
 [tmp]: https://github.com/raszi/node-tmp
 
-#### `Directory`
-Object called back with by `FixtureDir#mkdir`
+### `Directory`
+Class representation of a directory for getting `path` and cleaning up
 
-##### `Directory.path`
+#### `Directory.path`
 Filepath to directory (e.g. `/tmp/my-node-module-tests/git-log`)
 
-##### `Directory.destroy(cb)`
+#### `Directory.destroy(cb)`
 Method to clean up temporary directory (usually for next test run)
 
 - cb `Function`, Error-first callback function with signature `(err)`
