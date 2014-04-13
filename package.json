@@ -31,7 +31,8 @@
   "dependencies": {
     "tmp": "0.0.23",
     "wrench": "~1.5.8",
-    "async": "~0.7.0"
+    "async": "~0.7.0",
+    "mkdirp": "~0.3.5"
   },
   "devDependencies": {
     "mocha": "~1.11.0",
