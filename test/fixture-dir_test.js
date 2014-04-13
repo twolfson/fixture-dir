@@ -117,20 +117,35 @@ describe('A FixtureDir', function () {
   });
 
   describe('of a named folder that already exists and has contents (e.g. bad test/no cleanup)', function () {
+    // Generate our named folder and content
     fsUtils.mkdir('/tmp/fixture-dir-tests/existing');
     fsUtils.writeFile('/tmp/fixture-dir-tests/existing/hello.txt', 'world');
+
     // Assert the file was created for sanity
     fsUtils.readdir('/tmp/fixture-dir-tests/existing');
     before(function () {
       expect(this.files).to.deep.equal(['hello.txt']);
     });
 
-    it('cleans out the directory', function () {
+    // Generate our fixture dir
+    before(function (done) {
+      var that = this;
+      fixtureDir.mkdir({
+        folderName: 'existing'
+      }, function (err, dir) {
+        that.dir = dir;
+        done(err);
+      });
+    });
+    fsUtils.readdir('/tmp/fixture-dir-tests/existing');
+    cleanupFixtureDir();
 
+    it('cleans out the directory', function () {
+      expect(this.files).to.have.length(0);
     });
 
     it('creates a directory under that name', function () {
-
+      // Proved by reading the directory
     });
   });
 });
