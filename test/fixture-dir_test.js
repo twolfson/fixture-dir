@@ -3,6 +3,13 @@ var expect = require('chai').expect;
 var rimraf = require('rimraf');
 var FixtureDir = require('../');
 
+function cleanupFixtureDir() {
+  after(function (done) {
+    this.dir.destroy(done);
+    delete this.dir;
+  });
+}
+
 var fsUtils = {
   readdir: function (dirpath) {
     before(function (done) {
@@ -43,6 +50,7 @@ describe('A FixtureDir', function () {
     describe('when destroyed', function () {
       before(function (done) {
         this.dir.destroy(done);
+        delete this.dir;
       });
       fsUtils.readdir('/tmp/fixture-dir-tests');
 
@@ -52,9 +60,20 @@ describe('A FixtureDir', function () {
     });
   });
 
-  describe.skip('of a named folder', function () {
-    it('creates a directory under that name', function () {
+  describe('of a named folder', function () {
+    before(function (done) {
+      var that = this;
+      fixtureDir.mkdir({folderName: 'named'}, function (err, dir) {
+        that.dir = dir;
+        done(err);
+      });
+    });
+    fsUtils.readdir('/tmp/fixture-dir-tests');
+    cleanupFixtureDir();
 
+    it('creates a directory under that name', function () {
+      expect(this.files).to.contain('named');
+      expect(this.files).to.have.length(1);
     });
   });
 
