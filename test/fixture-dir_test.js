@@ -77,9 +77,23 @@ describe('A FixtureDir', function () {
     });
   });
 
-  describe.skip('copying another folder', function () {
-    it('creates a directory with the same contents', function () {
+  describe('copying another folder', function () {
+    before(function (done) {
+      var that = this;
+      fixtureDir.mkdir({
+        copyFrom: __dirname + '/test-files/copy',
+        folderName: 'copied'
+      }, function (err, dir) {
+        that.dir = dir;
+        done(err);
+      });
+    });
+    fsUtils.readdir('/tmp/fixture-dir-tests/copied');
+    cleanupFixtureDir();
 
+    it('creates a directory with the same contents', function () {
+      expect(this.files).to.contain('hai.txt');
+      expect(this.files).to.have.length(1);
     });
 
     describe('when destroyed', function () {
