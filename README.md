@@ -15,8 +15,41 @@ A mocha flavor, [mocha-fixture-dir][], is available for automatic directory clea
 Install the module with: `npm install fixture-dir`
 
 ```javascript
-var fixture_dir = require('fixture-dir');
-fixture_dir.awesome(); // "awesome"
+// Generate a tmp namespace for our tests
+var exec = require('child_process').exec;
+var FixtureDir = require('fixture-dir');
+var fixtureDir = new FixtureDir('my-node-module-tests');
+
+// Inside of our tests, copy over folder contents and interact with them
+before(function () {
+  // Create a `git-log` folder with the contents of our `git-log` fixture
+  var that = this;
+  fixtureDir.mkdir({
+    folderName: 'git-log',
+    copyFrom: __dirname + '/test-files/git-log' // Folder with `.git` activity
+  }, function (err, dir) {
+    // Save the directory for cleanup and callback
+    that.dir = dir;
+    done();
+  });
+});
+before(function (done) {
+  // Run `git log` in our directory
+  exec('git log', {cwd: this.dir.path}, function (err, stdout, stderr) {
+    // Save our stdout and callback
+    this.stdout = stdout;
+    done(err);
+  });
+});
+after(function (done) {
+  // Cleanup our directory
+  this.dir.destroy(done);
+  delete this.done;
+});
+
+it('retrieved `git log` in our fixture directory', function () {
+  assert(this.stdout);
+});
 ```
 
 ## Documentation
