@@ -7,7 +7,7 @@ This was built for quickly setting up/tearing down directories that originate fr
 [foundry-release-git]: https://github.com/twolfson/foundry-release-git/blob/1.0.1/test/utils/fixtures.js
 [sexy-bash-prompt]: https://github.com/twolfson/sexy-bash-prompt/blob/0.21.0/test/prompt_test.sh#L8-L19
 
-A mocha flavor, [mocha-fixture-dir][], is available for automatic directory cleanup.
+A mocha flavor is available, [mocha-fixture-dir][], which provides automatic directory cleanup.
 
 [mocha-fixture-dir]: https://github.com/twolfson/mocha-fixture-dir
 
