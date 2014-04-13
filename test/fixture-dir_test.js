@@ -40,9 +40,14 @@ describe('A FixtureDir', function () {
       expect(this.files).to.have.length(1);
     });
 
-    describe.skip('when destroyed', function () {
-      it('no longer exists', function () {
+    describe('when destroyed', function () {
+      before(function (done) {
+        this.dir.destroy(done);
+      });
+      fsUtils.readdir('/tmp/fixture-dir-tests');
 
+      it('no longer exists', function () {
+        expect(this.files).to.have.length(0);
       });
     });
   });
